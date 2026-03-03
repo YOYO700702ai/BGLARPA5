@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.streamlit/
+*.xlsx
+*.csv
+scraped_chars.json
+.env
