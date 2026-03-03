@@ -438,13 +438,18 @@ with main_col:
                     continue
                 
             # 優先抓取 Notion 的封面照片，若無則使用預設圖
-            cover_obj = p.get("cover", {})
+            cover_obj = p.get("cover") or {}
             image_url = placeholder_img
             if cover_obj:
-                if cover_obj.get("type") == "external":
-                    image_url = cover_obj.get("external", {}).get("url")
-                elif cover_obj.get("type") == "file":
-                    image_url = cover_obj.get("file", {}).get("url")
+                ctype = cover_obj.get("type", "")
+                if ctype == "external":
+                    url = (cover_obj.get("external") or {}).get("url", "")
+                    if url and url.startswith("http"):
+                        image_url = url
+                elif ctype == "file":
+                    url = (cover_obj.get("file") or {}).get("url", "")
+                    if url and url.startswith("http"):
+                        image_url = url
                     
             display_data.append({
                 "name": name, "synopsis": synopsis, "genre": genre,
