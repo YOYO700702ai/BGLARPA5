@@ -553,14 +553,45 @@ booking_html = """
                 <div style="width: 48px; height: 48px; background: #18181b; border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: #dc2626;">📍</div>
                 <div>
                     <h4 style="color: white; margin: 0 0 0.4rem 0; letter-spacing: 0.1em; font-size: 0.95rem;">劇院地址</h4>
-                    <p style="color: #6b7280; margin: 0; font-size: 0.85rem; letter-spacing: 0.05em;">台中市西屯區推理大道 221B 號 B1</p>
+                    <p style="color: #6b7280; margin: 0; font-size: 0.85rem; letter-spacing: 0.05em; line-height: 1.6;">
+                        <a href="https://www.google.com/maps/search/?api=1&query=台中市北區太平路19巷1號3樓" target="_blank" style="color: #6b7280; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#6b7280'">
+                            台中市北區太平路19巷1號3樓<br>
+                            (一中街麥當勞正對面三樓)
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;">
+                <div style="width: 48px; height: 48px; background: #18181b; border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: #dc2626;">📞</div>
+                <div>
+                    <h4 style="color: white; margin: 0 0 0.4rem 0; letter-spacing: 0.1em; font-size: 0.95rem;">連絡電話</h4>
+                    <p style="color: #6b7280; margin: 0; font-size: 0.85rem; letter-spacing: 0.05em;">
+                        <a href="tel:0422250020" style="color: #6b7280; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#6b7280'">
+                            (04) 2225-0020
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;">
+                <div style="width: 48px; height: 48px; background: #18181b; border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: #dc2626;">📘</div>
+                <div>
+                    <h4 style="color: white; margin: 0 0 0.4rem 0; letter-spacing: 0.1em; font-size: 0.95rem;">臉書專頁</h4>
+                    <p style="color: #6b7280; margin: 0; font-size: 0.85rem; letter-spacing: 0.05em;">
+                        <a href="https://www.facebook.com/bglarp.studio/" target="_blank" style="color: #6b7280; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#6b7280'">
+                            BGLARP實境推理館
+                        </a>
+                    </p>
                 </div>
             </div>
             <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 3rem;">
-                <div style="width: 48px; height: 48px; background: #18181b; border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: #dc2626;">📞</div>
+                <div style="width: 48px; height: 48px; background: #18181b; border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: #dc2626;">📷</div>
                 <div>
-                    <h4 style="color: white; margin: 0 0 0.4rem 0; letter-spacing: 0.1em; font-size: 0.95rem;">預約專線</h4>
-                    <p style="color: #6b7280; margin: 0; font-size: 0.85rem; letter-spacing: 0.05em;">04-2345-6789 (營業時間: 13:00 - 02:00)</p>
+                    <h4 style="color: white; margin: 0 0 0.4rem 0; letter-spacing: 0.1em; font-size: 0.95rem;">IG帳號</h4>
+                    <p style="color: #6b7280; margin: 0; font-size: 0.85rem; letter-spacing: 0.05em;">
+                        <a href="https://www.instagram.com/bglarp.studio/" target="_blank" style="color: #6b7280; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#6b7280'">
+                            bglarp.studio
+                        </a>
+                    </p>
                 </div>
             </div>
             
@@ -579,44 +610,11 @@ booking_html = """
     </div>
 </section>
 
-<footer style="background: #2a2a2a; padding: 4rem 2rem; border-top: 1px solid rgba(255,255,255,0.05); color: white; display: flex; justify-content: center; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
-    <div style="max-width: 1200px; width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem;">
-        
-        <!-- Column 1: Venue Info -->
-        <div style="flex: 1; min-width: 250px;">
-            <div style="font-weight: bold; margin-bottom: 1.5rem; font-size: 1.1rem; letter-spacing: 0.05em;">【場館資訊】</div>
-            <div style="margin-bottom: 1.2rem; font-size: 1.05rem; letter-spacing: 0.05em;">BGLARP實境推理館</div>
-            <a href="https://www.google.com/maps/search/?api=1&query=台中市北區太平路19巷1號3樓" target="_blank" style="color: #38bdf8; text-decoration: underline; line-height: 1.8; display: block; font-size: 1.05rem; letter-spacing: 0.05em; transition: color 0.3s;" onmouseover="this.style.color='#7dd3fc'" onmouseout="this.style.color='#38bdf8'">
-                台中市北區太平路19巷1號3樓<br>
-                (一中街麥當勞正對面三樓)
-            </a>
-        </div>
-
-        <!-- Column 2: Facebook -->
-        <div style="flex: 1; min-width: 200px;">
-            <div style="font-weight: bold; margin-bottom: 1.5rem; font-size: 1.1rem; letter-spacing: 0.05em;">【臉書專頁】</div>
-            <a href="https://www.facebook.com/bglarp.studio/" target="_blank" style="color: #38bdf8; text-decoration: underline; font-size: 1.05rem; letter-spacing: 0.05em; transition: color 0.3s;" onmouseover="this.style.color='#7dd3fc'" onmouseout="this.style.color='#38bdf8'">
-                BGLARP實境推理館
-            </a>
-        </div>
-
-        <!-- Column 3: Phone -->
-        <div style="flex: 1; min-width: 150px;">
-            <div style="font-weight: bold; margin-bottom: 1.5rem; font-size: 1.1rem; letter-spacing: 0.05em;">【連絡電話】</div>
-            <a href="tel:0422250020" style="color: #38bdf8; text-decoration: underline; font-size: 1.05rem; letter-spacing: 0.05em; transition: color 0.3s;" onmouseover="this.style.color='#7dd3fc'" onmouseout="this.style.color='#38bdf8'">
-                (04) 2225-0020
-            </a>
-        </div>
-
-        <!-- Column 4: Instagram -->
-        <div style="flex: 1; min-width: 150px;">
-            <div style="font-weight: bold; margin-bottom: 1.5rem; font-size: 1.1rem; letter-spacing: 0.05em;">【IG帳號】</div>
-            <a href="https://www.instagram.com/bglarp.studio/" target="_blank" style="color: #ffffff; text-decoration: none; font-size: 1.05rem; letter-spacing: 0.05em; transition: color 0.3s;" onmouseover="this.style.color='#d1d5db'" onmouseout="this.style.color='#ffffff'">
-                bglarp.studio
-            </a>
-        </div>
-        
+<footer style="background: #000; padding: 4rem 0; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;">
+    <div style="color: white; font-size: 1.5rem; font-weight: bold; letter-spacing: 0.2em; font-family: serif; margin-bottom: 1rem; display: flex; justify-content: center; align-items: center; gap: 8px;">
+        <span style="color: #dc2626;">🎬</span> BGLARP
     </div>
+    <div style="color: #6b7280; font-size: 0.85rem; letter-spacing: 0.1em;">&copy; 2026 BGLARP 實境推理館. All Rights Reserved.</div>
 </footer>
 </body></html>
 """
