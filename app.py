@@ -458,8 +458,8 @@ with main_col:
     if not display_data:
         st.info("無符合條件之劇本。")
     else:
-        # 預設顯示 8 個，每次展開追加 8 個
-        INITIAL_COUNT = 8
+        # 預設顯示 10 個，每次展開追加 10 個
+        INITIAL_COUNT = 10
         if "script_display_limit" not in st.session_state:
             st.session_state.script_display_limit = INITIAL_COUNT
             
@@ -525,13 +525,11 @@ with main_col:
         
         # 「展示更多」按鈕
         if len(display_data) > st.session_state.script_display_limit:
-            remaining = len(display_data) - st.session_state.script_display_limit
-            show_count = 8 if remaining >= 8 else remaining
             st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
             btn_col1, btn_col2, btn_col3 = st.columns([1, 1, 1])
             with btn_col2:
                 if st.button("顯示更多", key="show_more_scripts", use_container_width=True):
-                    st.session_state.script_display_limit += 8
+                    st.session_state.script_display_limit += 10
                     st.rerun()
 
 
