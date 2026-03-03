@@ -265,8 +265,8 @@ def show_script_modal(card):
     # ===== 內頁專屬 CSS =====
     st.markdown("""<style>
 .modal-poster-wrap {position: relative; border-radius: 12px; overflow: hidden; border: 1px solid #27272a; box-shadow: 0 25px 50px rgba(0,0,0,0.8); margin-bottom: 24px;}
-.modal-poster-wrap img {width: 100%; display: block; object-fit: contain; transition: transform 0.7s ease;}
-.modal-poster-wrap:hover img {transform: scale(1.03);}
+.modal-poster-wrap .modal-poster-bg {width: 100%; min-height: 400px; display: block; background-size: contain; background-position: center; background-repeat: no-repeat; transition: transform 0.7s ease;}
+.modal-poster-wrap:hover .modal-poster-bg {transform: scale(1.03);}
 .modal-poster-grad {position: absolute; inset: 0; background: linear-gradient(to top, #000 0%, transparent 60%, rgba(0,0,0,0.15) 100%); pointer-events: none;}
 .modal-poster-title {position: absolute; bottom: 24px; left: 28px; right: 28px;}
 .modal-poster-title h1 {font-size: 2.4rem; font-family: serif; font-weight: bold; letter-spacing: 0.02em; margin: 0 0 4px 0; color: white; text-shadow: 0 4px 20px rgba(0,0,0,0.8);}
@@ -290,8 +290,9 @@ div[data-testid="stTabs"] button[aria-selected="true"] {color: white !important;
 </style>""", unsafe_allow_html=True)
 
     # ===== 海報展示區（頂部全寬，帶漸層遮罩與浮動標題）=====
+    fallback_img = "https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=80&w=800&auto=format&fit=crop"
     st.markdown(f"""<div class="modal-poster-wrap">
-<img src="{card['image']}" alt="{card['name']}" referrerpolicy="no-referrer" onerror="this.src='https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=80&w=800&auto=format&fit=crop'">
+<div class="modal-poster-bg" style="background-image: url('{card['image']}'), url('{fallback_img}');"></div>
 <div class="modal-poster-grad"></div>
 <div class="modal-poster-title">
 <h1>{card['name']}</h1>
