@@ -186,6 +186,50 @@ button[data-testid="stBaseButton-secondary"][kind="secondary"]:hover {
     border-color: #dc2626 !important;
     color: white !important;
 }
+/* ===== 手機版響應式設計 ===== */
+@media (max-width: 768px) {
+    /* 導覽列：縮小字體與間距 */
+    nav div[style*="gap: 2rem"] {
+        gap: 1rem !important;
+        font-size: 0.75rem !important;
+    }
+    nav div[style*="font-size: 1.5rem"] {
+        font-size: 1.1rem !important;
+    }
+    
+    /* 卡片：手機上兩欄為主 */
+    .react-card {
+        aspect-ratio: 2/3;
+        margin-bottom: 0 !important;
+    }
+    .react-card-default h3 {
+        font-size: 0.85rem !important;
+    }
+    .react-card-hover {
+        padding: 12px !important;
+    }
+    .react-card-hover h3 {
+        font-size: 0.9rem !important;
+    }
+    .react-card-hover p {
+        font-size: 0.7rem !important;
+    }
+    
+    /* 「展示更多」按鈕 */
+    button[data-testid="stBaseButton-secondary"][kind="secondary"] {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.85rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .react-card-default h3 {
+        font-size: 0.75rem !important;
+    }
+    .react-card-hover h3 {
+        font-size: 0.8rem !important;
+    }
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -535,7 +579,7 @@ with main_col:
 
 # ================= Booking / Footer Section =================
 booking_html = """
-<html><head><meta charset="utf-8"></head>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
 <body style="margin:0; padding:0; background:#000; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
 <section id="booking" style="padding: 6rem 0; background-color: #09090b; border-top: 1px solid rgba(255,255,255,0.05);">
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; flex-wrap: wrap; gap: 4rem;">
@@ -543,7 +587,7 @@ booking_html = """
             <span style="color: #dc2626; font-weight: bold; letter-spacing: 0.2em; font-size: 0.875rem; display: block; margin-bottom: 0.5rem;">BOX OFFICE</span>
             <h2 style="font-size: 2.5rem; font-family: serif; font-weight: bold; color: white; letter-spacing: 0.1em; margin-bottom: 2rem; margin-top: 0;">預約入戲</h2>
             <p style="color: #9ca3af; line-height: 1.8; letter-spacing: 0.05em; margin-bottom: 1rem; font-size: 0.95rem;">
-                BGLARP實境推理館採全預約制。為確保最佳的遊戲體驗，請提前至少 3 天透過官方 LINE 或致電進行預約。
+                BGLARP實境推理館採全預約制。為確保最佳的遊戲體驗，請提前至少 3 天透過臉書專頁私訊或致電進行預約。
             </p>
             <p style="color: #9ca3af; line-height: 1.8; letter-spacing: 0.05em; margin-bottom: 3rem; font-size: 0.95rem;">
                 新手玩家無須擔心，預約時告知我們，客服將為您推薦最適合的入門劇本。每場次皆提供相應時代風格之服裝，為求完美沉浸，建議提早 15 分鐘到場換裝。
@@ -595,14 +639,14 @@ booking_html = """
                 </div>
             </div>
             
-            <a href="#" style="display: inline-flex; align-items: center; gap: 10px; padding: 1rem 2rem; background-color: white; color: black; font-weight: bold; letter-spacing: 0.1em; text-decoration: none; border-radius: 2px; transition: background 0.3s;" onmouseover="this.style.backgroundColor='#e5e7eb'" onmouseout="this.style.backgroundColor='white'">
-                🎫 立即透過 LINE 預約
+            <a href="https://www.facebook.com/bglarp.studio" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; padding: 1rem 2rem; background-color: white; color: black; font-weight: bold; letter-spacing: 0.1em; text-decoration: none; border-radius: 2px; transition: background 0.3s;" onmouseover="this.style.backgroundColor='#e5e7eb'" onmouseout="this.style.backgroundColor='white'">
+                📩 私訊預約
             </a>
         </div>
         
-        <div style="flex: 1; min-width: 300px; position: relative; padding: 1rem;">
+        <div style="flex: 1; min-width: 300px; min-height: 400px; position: relative; padding: 1rem;">
             <div style="position: absolute; inset: 0; background: rgba(185, 28, 28, 0.2); transform: translate(1.5rem, 1.5rem); border-radius: 4px;"></div>
-            <img src="https://images.unsplash.com/photo-1578301978018-3005759f48f7?q=80&w=1000&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 10; border-radius: 4px; filter: grayscale(100%); transition: filter 0.8s ease;" onmouseover="this.style.filter='grayscale(0)'" onmouseout="this.style.filter='grayscale(100%)'">
+            <iframe src="https://maps.google.com/maps?q=台中市北區太平路19巷1號&t=&z=16&ie=UTF8&iwloc=&output=embed" style="width: 100%; height: 100%; min-height: 400px; border: 0; position: relative; z-index: 10; border-radius: 4px;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
 </section>
