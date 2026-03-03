@@ -289,7 +289,7 @@ div[data-testid="stTabs"] button[aria-selected="true"] {color: white !important;
 
     # ===== 海報展示區（頂部全寬，帶漸層遮罩與浮動標題）=====
     st.markdown(f"""<div class="modal-poster-wrap">
-<img src="{card['image']}" alt="{card['name']}">
+<img src="{card['image']}" alt="{card['name']}" referrerpolicy="no-referrer" onerror="this.src='https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=80&w=800&auto=format&fit=crop'">
 <div class="modal-poster-grad"></div>
 <div class="modal-poster-title">
 <h1>{card['name']}</h1>
@@ -495,7 +495,7 @@ with main_col:
                     
                     # 生成 React / Tailwind 風格的 Hover Card
                     card_html = f"""<div class="react-card">
-<img src="{card['image']}" class="react-card-img">
+<img src="{card['image']}" class="react-card-img" referrerpolicy="no-referrer" onerror="this.src='https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=80&w=800&auto=format&fit=crop'">
 <div class="react-card-overlay"></div>
 
 <!-- 預設顯示 (底部) -->
