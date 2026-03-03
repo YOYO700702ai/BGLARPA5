@@ -60,20 +60,15 @@ header[data-testid="stHeader"], .stDeployButton {
 section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] > div {
     position: relative;
 }
-/* 卡片內嵌按鈕 — 完全覆蓋卡片，透明不可見 */
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has([data-testid="stButton"]) {
+/* 卡片內嵌按鈕 — 完全覆蓋卡片，透明不可見 (限定 primary) */
+section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]) {
     position: absolute !important;
     inset: 0 !important;
     z-index: 10 !important;
     margin: 0 !important;
     padding: 0 !important;
 }
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] [data-testid="stButton"] {
-    height: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] [data-testid="stButton"] button {
+section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] [data-testid="stButton"] button[kind="primary"] {
     width: 100% !important;
     height: 100% !important;
     background: transparent !important;
@@ -463,15 +458,12 @@ with main_col:
     if not display_data:
         st.info("無符合條件之劇本。")
     else:
-        # 預設顯示 8 個，透過 session_state 控制是否展開
-        if "show_all_scripts" not in st.session_state:
-            st.session_state.show_all_scripts = False
-        
+        # 預設顯示 8 個，每次展開追加 8 個
         INITIAL_COUNT = 8
-        if st.session_state.show_all_scripts:
-            visible_data = display_data
-        else:
-            visible_data = display_data[:INITIAL_COUNT]
+        if "script_display_limit" not in st.session_state:
+            st.session_state.script_display_limit = INITIAL_COUNT
+            
+        visible_data = display_data[:st.session_state.script_display_limit]
         
         # 重建 4 欄式網格
         cols_per_row = 4
@@ -526,19 +518,20 @@ with main_col:
 </div>
 </div>"""
                     st.markdown(card_html, unsafe_allow_html=True)
-                    if st.button(" ", key=f"btn_{card['name']}_{i}_{j}", use_container_width=True):
+                    if st.button(" ", key=f"btn_{card['name']}_{i}_{j}", type="primary", use_container_width=True):
                         show_script_modal(card)
 
             st.markdown("<div style='margin-bottom: 2rem;'></div>", unsafe_allow_html=True)
         
         # 「展示更多」按鈕
-        if not st.session_state.show_all_scripts and len(display_data) > INITIAL_COUNT:
-            remaining = len(display_data) - INITIAL_COUNT
+        if len(display_data) > st.session_state.script_display_limit:
+            remaining = len(display_data) - st.session_state.script_display_limit
+            show_count = 8 if remaining >= 8 else remaining
             st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
             btn_col1, btn_col2, btn_col3 = st.columns([1, 1, 1])
             with btn_col2:
-                if st.button(f"展示更多（還有 {remaining} 個劇本）", key="show_more_scripts", use_container_width=True):
-                    st.session_state.show_all_scripts = True
+                if st.button(f"顯示更多（還有 {remaining} 個劇本）", key="show_more_scripts", use_container_width=True):
+                    st.session_state.script_display_limit += 8
                     st.rerun()
 
 
