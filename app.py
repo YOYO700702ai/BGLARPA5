@@ -90,8 +90,10 @@ section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    opacity: 0.95;  /* 讓預設狀態下的圖片維持高亮度 */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.95;
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
     z-index: 1;
 }
@@ -500,7 +502,7 @@ with main_col:
                     
                     # 生成 React / Tailwind 風格的 Hover Card
                     card_html = f"""<div class="react-card">
-<img src="{card['image']}" class="react-card-img" referrerpolicy="no-referrer" onerror="this.src='https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=80&w=800&auto=format&fit=crop'">
+<div class="react-card-img" style="background-image: url('{card['image']}'), url('{placeholder_img}');"></div>
 <div class="react-card-overlay"></div>
 
 <!-- 預設顯示 (底部) -->
