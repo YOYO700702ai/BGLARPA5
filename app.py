@@ -465,8 +465,8 @@ with main_col:
             
         visible_data = display_data[:st.session_state.script_display_limit]
         
-        # 重建 4 欄式網格
-        cols_per_row = 4
+        # 重建 5 欄式網格
+        cols_per_row = 5
         for i in range(0, len(visible_data), cols_per_row):
             cols = st.columns(cols_per_row)
             row_items = visible_data[i : i+cols_per_row]
@@ -530,7 +530,7 @@ with main_col:
             st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
             btn_col1, btn_col2, btn_col3 = st.columns([1, 1, 1])
             with btn_col2:
-                if st.button(f"顯示更多（還有 {remaining} 個劇本）", key="show_more_scripts", use_container_width=True):
+                if st.button("顯示更多", key="show_more_scripts", use_container_width=True):
                     st.session_state.script_display_limit += 8
                     st.rerun()
 
