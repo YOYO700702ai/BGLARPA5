@@ -538,9 +538,6 @@ with main_col:
                     svg_clock = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
                     svg_ticket = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>'
 
-                    # 建立獨一無二的 CSS Class 來綁定這個專屬的隱藏按鈕
-                    btn_class = f"hidden-btn-{i}-{j}"
-
                     # 生成 Hover Card
                     card_html = f"""
 <div class="react-card">
@@ -567,24 +564,10 @@ with main_col:
 </div>
 </div>"""
                     
-                    # 佈局層疊：利用 st.container 的 CSS 來強制按鈕絕對定位並覆蓋在 card 上
-                    st.markdown(f"<style>.{btn_class} {{ position: absolute; inset: 0; opacity: 0; z-index: 10; cursor: pointer; }} .{btn_class} button {{ width: 100% !important; height: 100% !important; }}</style>", unsafe_allow_html=True)
-                    
-                    # 放入同一個容器
-                    card_container = st.container()
-                    with card_container:
-                        st.markdown(card_html, unsafe_allow_html=True)
-                        if st.button(" ", key=f"btn_{card['name']}_{i}_{j}", help="點擊查看劇本詳情"):
-                            show_script_modal(card)
-                        # 將按鈕加上我們定義的隱形覆蓋 class
-                        st.markdown(f"""<script>
-                            var btns = window.parent.document.querySelectorAll('button[kind="secondary"]');
-                            for (var k=0; k<btns.length; k++) {{
-                                if (btns[k].innerText === " ") {{
-                                    btns[k].parentElement.parentElement.classList.add('{btn_class}');
-                                }}
-                            }}
-                        </script>""", unsafe_allow_html=True)
+                    st.markdown(card_html, unsafe_allow_html=True)
+                    # 這是最安全、絕對不會破版或干擾的作法：在每張卡片下方直接放一顆按鈕
+                    if st.button("查看劇本詳情", key=f"btn_{card['name']}_{i}_{j}", use_container_width=True, type="primary"):
+                        show_script_modal(card)
 
             st.markdown("<div style='margin-bottom: 2rem;'></div>", unsafe_allow_html=True)
         
