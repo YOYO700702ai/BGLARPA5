@@ -538,8 +538,12 @@ with main_col:
                     svg_clock = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
                     svg_ticket = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>'
 
-                    # 生成 Hover Card
+                    import urllib.parse
+                    url_script_name = urllib.parse.quote(card['name'])
+                    
+                    # 生成 Hover Card (用 <a> 標籤包裝，點擊後會在網址加上 ?script=劇本名稱)
                     card_html = f"""
+<a href="?script={url_script_name}" target="_self" style="text-decoration: none; display: block; width: 100%; height: 100%;">
 <div class="react-card">
 <div class="react-card-img" style="background-image: url('{card['image']}'), url('{placeholder_img}');"></div>
 <div class="react-card-overlay"></div>
@@ -562,12 +566,10 @@ with main_col:
 {card['synopsis'] or "無簡介..."}
 </div>
 </div>
-</div>"""
+</div>
+</a>"""
                     
                     st.markdown(card_html, unsafe_allow_html=True)
-                    # 這是最安全、絕對不會破版或干擾的作法：在每張卡片下方直接放一顆按鈕
-                    if st.button("查看劇本詳情", key=f"btn_{card['name']}_{i}_{j}", use_container_width=True, type="primary"):
-                        show_script_modal(card)
 
             st.markdown("<div style='margin-bottom: 2rem;'></div>", unsafe_allow_html=True)
         
@@ -581,6 +583,17 @@ with main_col:
                     st.rerun()
 
 
+# ================= 網址參數解析 (獨立連結支援) =================
+# 如果使用者透過點擊劇本封面的 <a> 連結進入 (網址後帶有 ?script=劇本名稱)
+if "script" in st.query_params:
+    target_script_name = st.query_params["script"]
+    # 找到對應的劇本資料
+    target_script = next((s for s in safe_display_data if s["name"] == target_script_name), None)
+    if target_script:
+        # 清除參數避免重新整理一直開著
+        st.query_params.clear()
+        # 觸發顯示 Modal
+        show_script_modal(target_script)
 
 # ================= Booking / Footer Section =================
 booking_html = """
