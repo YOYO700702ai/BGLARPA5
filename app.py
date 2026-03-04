@@ -56,30 +56,33 @@ header[data-testid="stHeader"], .stDeployButton {
     /* 隔離層級，防止 Hover 影響隔壁欄位 */
     isolation: isolate;
 }
-/* 卡片外層容器需要 position: relative 才能讓按鈕覆蓋 */
+/* 卡片外層容器，由於我們將按鈕設置在最上層，所以改用網格層疊，
+同時所有 Hover 特效必須由整個欄位 (stColumn) 觸發，而不是讓 react-card 觸發 */
 section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] > div {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
     position: relative;
+    width: 100%;
 }
-/* 卡片內嵌按鈕 — 完全覆蓋卡片，透明不可見 (限定 primary) */
+section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] > div > [data-testid="stElementContainer"] {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+}
+
+/* 將 Streamlit 原本的按鈕化為一層看不見的保鮮膜，緊緊蓋在劇本封面與資訊上方 */
 section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]) {
-    position: absolute !important;
-    inset: 0 !important;
     z-index: 10 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] [data-testid="stButton"] button[kind="primary"] {
-    width: 100% !important;
-    height: 100% !important;
-    background: transparent !important;
-    border: none !important;
-    color: transparent !important;
-    font-size: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    cursor: pointer !important;
     opacity: 0 !important;
 }
+section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]) button {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    inset: 0 !important;
+    cursor: pointer !important;
+}
+
 .react-card-img {
     position: absolute;
     inset: 0;
@@ -92,8 +95,9 @@ section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
     z-index: 1;
 }
-.react-card:hover .react-card-img {
-    opacity: 0.15;  /* 滑鼠游標移過去時才變暗，凸顯文字 */
+/* 由外圍 stColumn 控制 Hover，突破被按鈕擋住的限制 */
+section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:hover .react-card-img {
+    opacity: 0.15;
     transform: scale(1.05);
 }
 
@@ -104,10 +108,10 @@ section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="
     background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 25%, transparent 60%);
     pointer-events: none;
     z-index: 2;
-    transition: opacity 0.4s ease-in-out;
+    transition: background 0.4s ease-in-out, backdrop-filter 0.4s ease-in-out;
 }
 /* 滑鼠游標移過去時，疊加一層極深的黑色半透明，讓所有白字更清楚 */
-.react-card:hover .react-card-overlay {
+section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:hover .react-card-overlay {
     background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(4px);
 }
@@ -125,7 +129,7 @@ section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="
     z-index: 3;
     pointer-events: none;
 }
-.react-card:hover .react-card-default {
+section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:hover .react-card-default {
     opacity: 0;
     transform: translateY(20px);
 }
@@ -144,7 +148,7 @@ section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="
     pointer-events: none;
     z-index: 4;
 }
-.react-card:hover .react-card-hover {
+section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:hover .react-card-hover {
     opacity: 1;
     transform: translateY(0);
 }
@@ -326,6 +330,25 @@ def show_script_modal(card):
 .char-avatar-desc { font-size: 0.7rem; color: #71717a; line-height: 1.5; font-weight: 300; max-width: 120px; }
 div[data-testid="stTabs"] button[data-baseweb="tab"] {font-size: 0.85rem !important; letter-spacing: 0.15em !important; color: #71717a !important; padding-bottom: 12px !important;}
 div[data-testid="stTabs"] button[aria-selected="true"] {color: white !important; border-bottom-color: #dc2626 !important;}
+/* === Modal 手機版響應式 === */
+@media (max-width: 768px) {
+    .modal-poster-wrap .modal-poster-bg { min-height: 250px; }
+    .modal-poster-title h1 { font-size: 1.5rem !important; }
+    .modal-poster-title { bottom: 16px; left: 16px; right: 16px; }
+    .info-grid { grid-template-columns: 1fr !important; gap: 2px; }
+    .info-card { padding: 12px 16px; gap: 10px; }
+    .info-card .info-value { font-size: 0.9rem; }
+    .char-avatar-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 16px 12px; }
+    .char-avatar-img { width: 64px; height: 64px; }
+    .char-avatar-name { font-size: 0.75rem; }
+    .char-avatar-desc { font-size: 0.65rem; max-width: 90px; }
+    .synopsis-para { padding-left: 12px; font-size: 0.85rem; }
+}
+@media (max-width: 480px) {
+    .modal-poster-wrap .modal-poster-bg { min-height: 200px; }
+    .modal-poster-title h1 { font-size: 1.3rem !important; }
+    .char-avatar-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
 </style>""", unsafe_allow_html=True)
 
     # ===== 海報展示區（頂部全寬，帶漸層遮罩與浮動標題）=====
@@ -404,7 +427,7 @@ div[data-testid="stTabs"] button[aria-selected="true"] {color: white !important;
 
     # ===== 馬上預約按鈕 =====
     st.markdown('<div style="height: 20px;"></div>', unsafe_allow_html=True)
-    st.markdown("""<div style="text-align: center;"><a href="#booking" style="display: inline-block; padding: 12px 40px; background: #dc2626; color: white; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.25em; text-decoration: none; border-radius: 4px; transition: all 0.3s;" onmouseover="this.style.background='#b91c1c';" onmouseout="this.style.background='#dc2626';">馬上預約 →</a></div>""", unsafe_allow_html=True)
+    st.markdown("""<div style="text-align: center;"><a href="https://www.facebook.com/bglarp.studio/" target="_blank" style="display: inline-block; padding: 12px 40px; background: #dc2626; color: white; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.25em; text-decoration: none; border-radius: 4px; transition: all 0.3s;" onmouseover="this.style.background='#b91c1c';" onmouseout="this.style.background='#dc2626';">馬上預約 →</a></div>""", unsafe_allow_html=True)
 
 
 # ================= Scripts Section =================
@@ -509,7 +532,7 @@ with main_col:
             
         visible_data = display_data[:st.session_state.script_display_limit]
         
-        # 重建 5 欄式網格
+        # 5 欄式網格（桌面 5 欄，手機自動堆疊為 1 欄）
         cols_per_row = 5
         for i in range(0, len(visible_data), cols_per_row):
             cols = st.columns(cols_per_row)
@@ -537,7 +560,7 @@ with main_col:
                     svg_clock = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
                     svg_ticket = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>'
                     
-                    # 生成 React / Tailwind 風格的 Hover Card
+                    # 生成 Hover Card
                     card_html = f"""<div class="react-card">
 <div class="react-card-img" style="background-image: url('{card['image']}'), url('{placeholder_img}');"></div>
 <div class="react-card-overlay"></div>
@@ -575,6 +598,7 @@ with main_col:
                 if st.button("顯示更多", key="show_more_scripts", use_container_width=True):
                     st.session_state.script_display_limit += 10
                     st.rerun()
+
 
 
 # ================= Booking / Footer Section =================
