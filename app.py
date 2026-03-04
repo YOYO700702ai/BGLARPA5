@@ -51,31 +51,30 @@ header[data-testid="stHeader"], .stDeployButton {
     background-color: #111;
     border-radius: 4px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    cursor: pointer;
     margin-bottom: 0px; 
-    /* 隔離層級，防止 Hover 影響隔壁欄位 */
     isolation: isolate;
 }
-/* 卡片外層容器，由於我們將按鈕設置在最上層，所以改用網格層疊，
-同時所有 Hover 特效必須由整個欄位 (stColumn) 觸發，而不是讓 react-card 觸發 */
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] > div {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-    position: relative;
-    width: 100%;
-}
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] > div > [data-testid="stElementContainer"] {
-    grid-column: 1 / -1;
-    grid-row: 1 / -1;
+
+/* 讓每一層 column 都具備 relative 定位，做為 absolute 的基準 */
+div[data-testid="column"], div[data-testid="stColumn"] {
+    position: relative !important;
 }
 
-/* 將 Streamlit 原本的按鈕化為一層看不見的保鮮膜，緊緊蓋在劇本封面與資訊上方 */
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]) {
+/* 將 Streamlit 的 button 容器層變成絕對且佔滿整個 column */
+div[data-testid="column"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]),
+div[data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]) {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
     z-index: 10 !important;
     opacity: 0 !important;
 }
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]) button {
+
+/* 確保 button 元件本身填滿 */
+div[data-testid="column"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]) button,
+div[data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]) button {
     width: 100% !important;
     height: 100% !important;
     position: absolute !important;
@@ -83,6 +82,7 @@ section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="
     cursor: pointer !important;
 }
 
+/* 圖片預設 */
 .react-card-img {
     position: absolute;
     inset: 0;
@@ -95,13 +95,14 @@ section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
     z-index: 1;
 }
-/* 由外圍 stColumn 控制 Hover，突破被按鈕擋住的限制 */
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:hover .react-card-img {
-    opacity: 0.15;
-    transform: scale(1.05);
+/* 當包含這張卡片的 column 或 button 被 hover 時，觸發卡片特效 */
+div[data-testid="column"]:has(button:hover) .react-card-img,
+div[data-testid="stColumn"]:has(button:hover) .react-card-img {
+    opacity: 0.15 !important;
+    transform: scale(1.05) !important;
 }
 
-/* 漸色遮罩：確保底部文字能看清楚，但不要影響整張圖片 */
+/* 漸色遮罩預設 */
 .react-card-overlay {
     position: absolute;
     inset: 0;
@@ -110,10 +111,10 @@ section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="
     z-index: 2;
     transition: background 0.4s ease-in-out, backdrop-filter 0.4s ease-in-out;
 }
-/* 滑鼠游標移過去時，疊加一層極深的黑色半透明，讓所有白字更清楚 */
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:hover .react-card-overlay {
-    background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(4px);
+div[data-testid="column"]:has(button:hover) .react-card-overlay,
+div[data-testid="stColumn"]:has(button:hover) .react-card-overlay {
+    background: rgba(10, 10, 10, 0.95) !important;
+    backdrop-filter: blur(4px) !important;
 }
 
 /* 預設狀態資訊 (置底) */
@@ -129,9 +130,10 @@ section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="
     z-index: 3;
     pointer-events: none;
 }
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:hover .react-card-default {
-    opacity: 0;
-    transform: translateY(20px);
+div[data-testid="column"]:has(button:hover) .react-card-default,
+div[data-testid="stColumn"]:has(button:hover) .react-card-default {
+    opacity: 0 !important;
+    transform: translateY(20px) !important;
 }
 
 /* Hover 狀態資訊 (置中) */
@@ -148,9 +150,10 @@ section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="
     pointer-events: none;
     z-index: 4;
 }
-section[data-testid="stMain"] [data-testid="stHorizontalBlock"] > [data-testid="stColumn"]:hover .react-card-hover {
-    opacity: 1;
-    transform: translateY(0);
+div[data-testid="column"]:has(button:hover) .react-card-hover,
+div[data-testid="stColumn"]:has(button:hover) .react-card-hover {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
 }
 
 
