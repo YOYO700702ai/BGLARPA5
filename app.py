@@ -17,9 +17,11 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# Google Fonts 載入
+st.markdown('<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">', unsafe_allow_html=True)
+
 # 全局自訂 CSS 注入，重現 React 版面風格
 st.markdown("""
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* Reset and base */
 .stApp {
