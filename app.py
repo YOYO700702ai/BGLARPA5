@@ -74,8 +74,8 @@ div[data-testid="stVerticalBlock"] > div {
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
     z-index: 1;
 }
-/* 由外圍控制 Hover */
-div[data-testid="stVerticalBlock"]:hover .react-card-img {
+/* 由卡片自身控制 Hover */
+.react-card:hover .react-card-img {
     opacity: 0.15;
     transform: scale(1.05);
 }
@@ -89,7 +89,7 @@ div[data-testid="stVerticalBlock"]:hover .react-card-img {
     z-index: 2;
     transition: background 0.4s ease-in-out, backdrop-filter 0.4s ease-in-out;
 }
-div[data-testid="stVerticalBlock"]:hover .react-card-overlay {
+.react-card:hover .react-card-overlay {
     background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(4px);
 }
@@ -107,7 +107,7 @@ div[data-testid="stVerticalBlock"]:hover .react-card-overlay {
     z-index: 3;
     pointer-events: none;
 }
-div[data-testid="stVerticalBlock"]:hover .react-card-default {
+.react-card:hover .react-card-default {
     opacity: 0;
     transform: translateY(20px);
 }
@@ -126,7 +126,7 @@ div[data-testid="stVerticalBlock"]:hover .react-card-default {
     pointer-events: none;
     z-index: 4;
 }
-div[data-testid="stVerticalBlock"]:hover .react-card-hover {
+.react-card:hover .react-card-hover {
     opacity: 1;
     transform: translateY(0);
 }
