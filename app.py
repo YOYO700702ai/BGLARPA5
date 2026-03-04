@@ -19,6 +19,7 @@ st.set_page_config(
 
 # 全局自訂 CSS 注入，重現 React 版面風格
 st.markdown("""
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* Reset and base */
 .stApp {
@@ -229,15 +230,15 @@ hero_html = """<nav style="position: fixed; width: 100%; z-index: 50; top: 0; ba
 </div>
 </nav>
 
-<section style="position: relative; height: 60vh; min-height: 400px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000;">
+<section style="position: relative; height: 40vh; min-height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000;">
 <div style="position: absolute; inset: 0; z-index: 0;">
 <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, #000 100%); z-index: 10;"></div>
 <img src="https://images.unsplash.com/photo-1519074069444-1ba4fff66d16?q=80&w=2000&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
 </div>
 
-<div style="position: relative; z-index: 20; text-align: center; padding: 0 1rem; margin-top: 4rem;">
-<p style="font-size: 1.35rem; color: #e5e7eb; letter-spacing: 0.15em; line-height: 2.2; max-width: 800px; margin-inline: auto; text-shadow: 0 4px 15px rgba(0,0,0,0.9); font-weight: 400;">
-打破現實與虛構的邊界。<br>穿上戲服，走進專屬場景，<br>在 BGLARP 演繹你的第二人生。
+<div style="position: relative; z-index: 20; text-align: center; padding: 0 1rem; margin-top: 2rem;">
+<p style="font-family: 'Noto Serif TC', serif; font-size: 1.5rem; color: #e5e7eb; letter-spacing: 0.2em; line-height: 2.4; max-width: 800px; margin-inline: auto; text-shadow: 0 4px 20px rgba(0,0,0,0.9), 0 0 40px rgba(185,28,28,0.15); font-weight: 700;">
+打破現實與虛構的邊界。<br>走進專屬場景，演繹你的第二人生。
 </p>
 </div>
 </section>"""
