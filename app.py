@@ -583,7 +583,7 @@ with main_col:
 if "script" in st.query_params:
     target_script_name = st.query_params["script"]
     # 找到對應的劇本資料
-    target_script = next((s for s in safe_display_data if s["name"] == target_script_name), None)
+    target_script = next((s for s in display_data if s["name"] == target_script_name), None)
     if target_script:
         # 清除參數避免重新整理一直開著
         st.query_params.clear()
