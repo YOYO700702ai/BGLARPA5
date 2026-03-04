@@ -236,13 +236,9 @@ hero_html = """<nav style="position: fixed; width: 100%; z-index: 50; top: 0; ba
 </div>
 
 <div style="position: relative; z-index: 20; text-align: center; padding: 0 1rem; margin-top: 4rem;">
-<div style="color: #dc2626; font-weight: bold; letter-spacing: 0.4em; margin-bottom: 1.5rem; font-size: 0.85rem;">CINEMATIC LARP EXPERIENCE</div>
-<p style="font-size: 1.05rem; color: #e5e7eb; letter-spacing: 0.15em; line-height: 2; margin-bottom: 2.5rem; max-width: 650px; margin-inline: auto; text-shadow: 0 2px 10px rgba(0,0,0,0.8); font-weight: 300;">
-打破現實與虛構的邊界。<br>穿上戲服，走進專屬場景，在 BGLARP 演繹你的第二人生。
+<p style="font-size: 1.35rem; color: #e5e7eb; letter-spacing: 0.15em; line-height: 2.2; max-width: 800px; margin-inline: auto; text-shadow: 0 4px 15px rgba(0,0,0,0.9); font-weight: 400;">
+打破現實與虛構的邊界。<br>穿上戲服，走進專屬場景，<br>在 BGLARP 演繹你的第二人生。
 </p>
-<a href="#scripts" style="display: inline-block; padding: 0.8rem 2.5rem; border: 1px solid rgba(220, 38, 38, 0.5); background-color: rgba(185, 28, 28, 0.15); backdrop-filter: blur(4px); color: white; font-size: 0.9rem; letter-spacing: 0.15em; text-decoration: none; transition: all 0.3s; border-radius: 2px;" onmouseover="this.style.backgroundColor='rgba(220, 38, 38, 0.8)'; this.style.borderColor='#dc2626';" onmouseout="this.style.backgroundColor='rgba(185, 28, 28, 0.15)'; this.style.borderColor='rgba(220, 38, 38, 0.5)';">
-查看熱映劇本
-</a>
 </div>
 </section>"""
 st.markdown(hero_html, unsafe_allow_html=True)
