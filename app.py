@@ -218,8 +218,8 @@ button[data-testid="stBaseButton-secondary"][kind="secondary"]:hover {
 # ================= 頂部導覽列與 Hero Section =================
 hero_html = """<nav style="position: fixed; width: 100%; z-index: 50; top: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
 <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
-<div style="color: white; font-size: 1.5rem; font-weight: bold; letter-spacing: 0.2em; font-family: serif; display: flex; align-items: center; gap: 8px;">
-<span style="color: #dc2626;">🎬</span> BGLARP
+<div style="color: white; font-size: 1.2rem; font-weight: bold; letter-spacing: 0.15em; font-family: serif; display: flex; align-items: center; gap: 8px;">
+<span style="color: #dc2626;">🎬</span> BGLARP實境推理館
 </div>
 <div style="display: flex; gap: 2rem; font-size: 0.875rem; letter-spacing: 0.1em; text-transform: uppercase;">
 <a href="#about" style="color: white; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='white'">關於本館</a>
@@ -229,20 +229,19 @@ hero_html = """<nav style="position: fixed; width: 100%; z-index: 50; top: 0; ba
 </div>
 </nav>
 
-<section style="position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000;">
+<section style="position: relative; height: 60vh; min-height: 400px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000;">
 <div style="position: absolute; inset: 0; z-index: 0;">
-<div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, #000 100%); z-index: 10;"></div>
+<div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, #000 100%); z-index: 10;"></div>
 <img src="https://images.unsplash.com/photo-1519074069444-1ba4fff66d16?q=80&w=2000&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
 </div>
 
-<div style="position: relative; z-index: 20; text-align: center; padding: 0 1rem; margin-top: 5rem;">
-<div style="color: #dc2626; font-weight: bold; letter-spacing: 0.3em; margin-bottom: 1rem; font-size: 0.9rem;">CINEMATIC LARP EXPERIENCE</div>
-<h1 style="font-size: 4.5rem; font-family: serif; font-weight: bold; color: white; margin-bottom: 1.5rem; letter-spacing: 0.1em; text-shadow: 0 10px 30px rgba(0,0,0,0.8); line-height: 1.2;">入戲，<br>才是唯一的解答</h1>
-<p style="font-size: 1.1rem; color: #9ca3af; letter-spacing: 0.1em; line-height: 1.8; margin-bottom: 2.5rem; max-width: 600px; margin-inline: auto;">
+<div style="position: relative; z-index: 20; text-align: center; padding: 0 1rem; margin-top: 4rem;">
+<div style="color: #dc2626; font-weight: bold; letter-spacing: 0.4em; margin-bottom: 1.5rem; font-size: 0.85rem;">CINEMATIC LARP EXPERIENCE</div>
+<p style="font-size: 1.05rem; color: #e5e7eb; letter-spacing: 0.15em; line-height: 2; margin-bottom: 2.5rem; max-width: 650px; margin-inline: auto; text-shadow: 0 2px 10px rgba(0,0,0,0.8); font-weight: 300;">
 打破現實與虛構的邊界。<br>穿上戲服，走進專屬場景，在 BGLARP 演繹你的第二人生。
 </p>
-<a href="#scripts" style="display: inline-block; padding: 1rem 2.5rem; background-color: #b91c1c; color: white; font-weight: bold; letter-spacing: 0.1em; text-decoration: none; transition: background 0.3s; border-radius: 2px;" onmouseover="this.style.backgroundColor='#dc2626'" onmouseout="this.style.backgroundColor='#b91c1c'">
-查看熱映劇本 >
+<a href="#scripts" style="display: inline-block; padding: 0.8rem 2.5rem; border: 1px solid rgba(220, 38, 38, 0.5); background-color: rgba(185, 28, 28, 0.15); backdrop-filter: blur(4px); color: white; font-size: 0.9rem; letter-spacing: 0.15em; text-decoration: none; transition: all 0.3s; border-radius: 2px;" onmouseover="this.style.backgroundColor='rgba(220, 38, 38, 0.8)'; this.style.borderColor='#dc2626';" onmouseout="this.style.backgroundColor='rgba(185, 28, 28, 0.15)'; this.style.borderColor='rgba(220, 38, 38, 0.5)';">
+查看熱映劇本
 </a>
 </div>
 </section>"""
