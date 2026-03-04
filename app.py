@@ -51,35 +51,14 @@ header[data-testid="stHeader"], .stDeployButton {
     background-color: #111;
     border-radius: 4px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
     margin-bottom: 0px; 
     isolation: isolate;
 }
 
-/* 讓每一層 column 都具備 relative 定位，做為 absolute 的基準 */
-div[data-testid="column"], div[data-testid="stColumn"] {
-    position: relative !important;
-}
-
-/* 將 Streamlit 的 button 容器層變成絕對且佔滿整個 column */
-div[data-testid="column"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]),
-div[data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]) {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    z-index: 10 !important;
-    opacity: 0 !important;
-}
-
-/* 確保 button 元件本身填滿 */
-div[data-testid="column"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]) button,
-div[data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(button[kind="primary"]) button {
-    width: 100% !important;
-    height: 100% !important;
-    position: absolute !important;
-    inset: 0 !important;
-    cursor: pointer !important;
+/* 確保容器可以讓 absolute 的按鈕正確定位 */
+div[data-testid="stVerticalBlock"] > div {
+    position: relative;
 }
 
 /* 圖片預設 */
@@ -95,6 +74,11 @@ div[data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(butto
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
     z-index: 1;
 }
+/* 由外圍控制 Hover */
+div[data-testid="stVerticalBlock"]:hover .react-card-img {
+    opacity: 0.15;
+    transform: scale(1.05);
+}
 
 /* 漸色遮罩預設 */
 .react-card-overlay {
@@ -104,6 +88,10 @@ div[data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(butto
     pointer-events: none;
     z-index: 2;
     transition: background 0.4s ease-in-out, backdrop-filter 0.4s ease-in-out;
+}
+div[data-testid="stVerticalBlock"]:hover .react-card-overlay {
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(4px);
 }
 
 /* 預設狀態資訊 (置底) */
@@ -119,6 +107,10 @@ div[data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(butto
     z-index: 3;
     pointer-events: none;
 }
+div[data-testid="stVerticalBlock"]:hover .react-card-default {
+    opacity: 0;
+    transform: translateY(20px);
+}
 
 /* Hover 狀態資訊 (置中) */
 .react-card-hover {
@@ -133,6 +125,10 @@ div[data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(butto
     transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
     pointer-events: none;
     z-index: 4;
+}
+div[data-testid="stVerticalBlock"]:hover .react-card-hover {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 
@@ -539,40 +535,12 @@ with main_col:
                     
                     # 定義紅線框 SVG icon
                     svg_users = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
-                    svg_clock = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
-                    svg_ticket = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>'
-                    
-                    # 建立獨一無二的 CSS Class 以確保 Hover 不會跨欄位干擾
-                    unique_class = f"card-hover-scope-{i}-{j}"
-
-                    # 針對該卡片的專屬 CSS，確保只有滑鼠停在屬於該卡片的 column 上時才會觸發 (透過 :has)
-                    scoped_css = f"""<style>
-div[data-testid="column"]:has(.{unique_class}):hover .{unique_class} .react-card-img,
-div[data-testid="stColumn"]:has(.{unique_class}):hover .{unique_class} .react-card-img {{
-    opacity: 0.15 !important;
-    transform: scale(1.05) !important;
-}}
-div[data-testid="column"]:has(.{unique_class}):hover .{unique_class} .react-card-overlay,
-div[data-testid="stColumn"]:has(.{unique_class}):hover .{unique_class} .react-card-overlay {{
-    background: rgba(10, 10, 10, 0.95) !important;
-    backdrop-filter: blur(4px) !important;
-}}
-div[data-testid="column"]:has(.{unique_class}):hover .{unique_class} .react-card-default,
-div[data-testid="stColumn"]:has(.{unique_class}):hover .{unique_class} .react-card-default {{
-    opacity: 0 !important;
-    transform: translateY(20px) !important;
-}}
-div[data-testid="column"]:has(.{unique_class}):hover .{unique_class} .react-card-hover,
-div[data-testid="stColumn"]:has(.{unique_class}):hover .{unique_class} .react-card-hover {{
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-}}
-</style>"""
+                    # 建立獨一無二的 CSS Class 來綁定這個專屬的隱藏按鈕
+                    btn_class = f"hidden-btn-{i}-{j}"
 
                     # 生成 Hover Card
                     card_html = f"""
-{scoped_css}
-<div class="react-card {unique_class}">
+<div class="react-card">
 <div class="react-card-img" style="background-image: url('{card['image']}'), url('{placeholder_img}');"></div>
 <div class="react-card-overlay"></div>
 
@@ -595,9 +563,25 @@ div[data-testid="stColumn"]:has(.{unique_class}):hover .{unique_class} .react-ca
 </div>
 </div>
 </div>"""
-                    st.markdown(card_html, unsafe_allow_html=True)
-                    if st.button(" ", key=f"btn_{card['name']}_{i}_{j}", type="primary", use_container_width=True):
-                        show_script_modal(card)
+                    
+                    # 佈局層疊：利用 st.container 的 CSS 來強制按鈕絕對定位並覆蓋在 card 上
+                    st.markdown(f"<style>.{btn_class} {{ position: absolute; inset: 0; opacity: 0; z-index: 10; cursor: pointer; }} .{btn_class} button {{ width: 100% !important; height: 100% !important; }}</style>", unsafe_allow_html=True)
+                    
+                    # 放入同一個容器
+                    card_container = st.container()
+                    with card_container:
+                        st.markdown(card_html, unsafe_allow_html=True)
+                        if st.button(" ", key=f"btn_{card['name']}_{i}_{j}", help="點擊查看劇本詳情"):
+                            show_script_modal(card)
+                        # 將按鈕加上我們定義的隱形覆蓋 class
+                        st.markdown(f"""<script>
+                            var btns = window.parent.document.querySelectorAll('button[kind="secondary"]');
+                            for (var k=0; k<btns.length; k++) {{
+                                if (btns[k].innerText === " ") {{
+                                    btns[k].parentElement.parentElement.classList.add('{btn_class}');
+                                }}
+                            }}
+                        </script>""", unsafe_allow_html=True)
 
             st.markdown("<div style='margin-bottom: 2rem;'></div>", unsafe_allow_html=True)
         
