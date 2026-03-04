@@ -95,12 +95,6 @@ div[data-testid="stColumn"] > div > [data-testid="stElementContainer"]:has(butto
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
     z-index: 1;
 }
-/* 當包含這張卡片的 column 或 button 被 hover 時，觸發卡片特效 */
-div[data-testid="column"]:has(button:hover) .react-card-img,
-div[data-testid="stColumn"]:has(button:hover) .react-card-img {
-    opacity: 0.15 !important;
-    transform: scale(1.05) !important;
-}
 
 /* 漸色遮罩預設 */
 .react-card-overlay {
@@ -110,11 +104,6 @@ div[data-testid="stColumn"]:has(button:hover) .react-card-img {
     pointer-events: none;
     z-index: 2;
     transition: background 0.4s ease-in-out, backdrop-filter 0.4s ease-in-out;
-}
-div[data-testid="column"]:has(button:hover) .react-card-overlay,
-div[data-testid="stColumn"]:has(button:hover) .react-card-overlay {
-    background: rgba(10, 10, 10, 0.95) !important;
-    backdrop-filter: blur(4px) !important;
 }
 
 /* 預設狀態資訊 (置底) */
@@ -130,11 +119,6 @@ div[data-testid="stColumn"]:has(button:hover) .react-card-overlay {
     z-index: 3;
     pointer-events: none;
 }
-div[data-testid="column"]:has(button:hover) .react-card-default,
-div[data-testid="stColumn"]:has(button:hover) .react-card-default {
-    opacity: 0 !important;
-    transform: translateY(20px) !important;
-}
 
 /* Hover 狀態資訊 (置中) */
 .react-card-hover {
@@ -149,11 +133,6 @@ div[data-testid="stColumn"]:has(button:hover) .react-card-default {
     transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
     pointer-events: none;
     z-index: 4;
-}
-div[data-testid="column"]:has(button:hover) .react-card-hover,
-div[data-testid="stColumn"]:has(button:hover) .react-card-hover {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
 }
 
 
@@ -563,8 +542,37 @@ with main_col:
                     svg_clock = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
                     svg_ticket = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>'
                     
+                    # 建立獨一無二的 CSS Class 以確保 Hover 不會跨欄位干擾
+                    unique_class = f"card-hover-scope-{i}-{j}"
+
+                    # 針對該卡片的專屬 CSS，確保只有滑鼠停在屬於該卡片的 column 上時才會觸發 (透過 :has)
+                    scoped_css = f"""<style>
+div[data-testid="column"]:has(.{unique_class}):hover .{unique_class} .react-card-img,
+div[data-testid="stColumn"]:has(.{unique_class}):hover .{unique_class} .react-card-img {{
+    opacity: 0.15 !important;
+    transform: scale(1.05) !important;
+}}
+div[data-testid="column"]:has(.{unique_class}):hover .{unique_class} .react-card-overlay,
+div[data-testid="stColumn"]:has(.{unique_class}):hover .{unique_class} .react-card-overlay {{
+    background: rgba(10, 10, 10, 0.95) !important;
+    backdrop-filter: blur(4px) !important;
+}}
+div[data-testid="column"]:has(.{unique_class}):hover .{unique_class} .react-card-default,
+div[data-testid="stColumn"]:has(.{unique_class}):hover .{unique_class} .react-card-default {{
+    opacity: 0 !important;
+    transform: translateY(20px) !important;
+}}
+div[data-testid="column"]:has(.{unique_class}):hover .{unique_class} .react-card-hover,
+div[data-testid="stColumn"]:has(.{unique_class}):hover .{unique_class} .react-card-hover {{
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}}
+</style>"""
+
                     # 生成 Hover Card
-                    card_html = f"""<div class="react-card">
+                    card_html = f"""
+{scoped_css}
+<div class="react-card {unique_class}">
 <div class="react-card-img" style="background-image: url('{card['image']}'), url('{placeholder_img}');"></div>
 <div class="react-card-overlay"></div>
 
