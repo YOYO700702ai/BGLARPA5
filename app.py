@@ -52,11 +52,34 @@ header[data-testid="stHeader"], .stDeployButton {
     aspect-ratio: 2/3;
     overflow: hidden;
     background-color: #111;
-    border-radius: 4px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     cursor: pointer;
     margin-bottom: 0px; 
     isolation: isolate;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.react-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.4), transparent 40%, transparent 60%, rgba(234, 179, 8, 0.3));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.react-card:hover {
+    transform: translateY(-5px);
+    border-color: transparent;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(220, 38, 38, 0.2);
+}
+
+.react-card:hover::before {
+    opacity: 1;
 }
 
 /* 確保容器可以讓 absolute 的按鈕正確定位 */
@@ -232,15 +255,18 @@ hero_html = """<nav style="position: fixed; width: 100%; z-index: 50; top: 0; ba
 </div>
 </nav>
 
-<section style="position: relative; height: 40vh; min-height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000;">
+<section style="position: relative; height: 35vh; min-height: 250px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000;">
 <div style="position: absolute; inset: 0; z-index: 0;">
-<div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, #000 100%); z-index: 10;"></div>
-<img src="https://images.unsplash.com/photo-1519074069444-1ba4fff66d16?q=80&w=2000&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover;">
+<div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, #000 100%); z-index: 10;"></div>
+<img src="https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?q=80&w=2000&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover; filter: contrast(1.2);">
 </div>
 
 <div style="position: relative; z-index: 20; text-align: center; padding: 0 1rem; margin-top: 2rem;">
-<p style="font-family: 'Noto Serif TC', serif; font-size: 1.5rem; color: #e5e7eb; letter-spacing: 0.2em; line-height: 2.4; max-width: 800px; margin-inline: auto; text-shadow: 0 4px 20px rgba(0,0,0,0.9), 0 0 40px rgba(185,28,28,0.15); font-weight: 700;">
-打破現實與虛構的邊界。<br>走進專屬場景，演繹你的第二人生。
+<h1 style="font-family: 'Noto Serif TC', serif; font-size: 2.8rem; color: #f8fafc; letter-spacing: 0.25em; margin: 0 0 1.5rem 0; font-weight: 700; text-shadow: 0 4px 20px rgba(0,0,0,0.8);">
+打破現實與虛構的<span style="background: linear-gradient(135deg, #ef4444 0%, #f97316 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none; font-weight: 900;">邊界</span>。
+</h1>
+<p style="font-family: 'Noto Serif TC', serif; font-size: 1.1rem; color: #9ca3af; letter-spacing: 0.3em; margin: 0; font-weight: 400; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
+走進專屬場景，演繹你的第二人生。
 </p>
 </div>
 </section>"""
