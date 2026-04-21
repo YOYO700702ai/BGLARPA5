@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
 import ScriptCard from './ScriptCard';
-import ScriptModal from './ScriptModal';
 import styles from './ScriptGrid.module.css';
 
 export default function ScriptGrid() {
@@ -10,7 +9,6 @@ export default function ScriptGrid() {
     const [playerFilter, setPlayerFilter] = useState('全部');
     const [genreFilter, setGenreFilter] = useState('全部');
     const [displayLimit, setDisplayLimit] = useState(10);
-    const [selectedScript, setSelectedScript] = useState(null);
 
     useEffect(() => {
         fetch('/api/scripts')
@@ -28,11 +26,13 @@ export default function ScriptGrid() {
             const genreStr = s.genre.join(',');
             let match = false;
             if (genreFilter === '恐怖') {
-                match = /恐|驚悚/.test(genreStr); // matches 恐怖, 微恐, 中恐, 驚悚
+                match = /恐|驚悚/.test(genreStr);
             } else if (genreFilter === '沉浸') {
                 match = /沉浸|情感|演繹/.test(genreStr);
             } else if (genreFilter === '機制') {
-                match = /機制|陣營|歡樂|撕/.test(genreStr);
+                match = /機制|陣營|撕/.test(genreStr);
+            } else if (genreFilter === '歡樂') {
+                match = /歡樂|輕鬆|搞笑/.test(genreStr);
             } else if (genreFilter === '硬核') {
                 match = /硬核|燒腦/.test(genreStr);
             } else if (genreFilter === '推理') {
@@ -69,6 +69,7 @@ export default function ScriptGrid() {
                 <div className={styles.filters}>
                     <select value={playerFilter} onChange={e => setPlayerFilter(e.target.value)} className={styles.select}>
                         <option>全部</option>
+                        <option>4人</option>
                         <option>5人</option>
                         <option>6人</option>
                         <option>7人</option>
@@ -82,6 +83,7 @@ export default function ScriptGrid() {
                         <option>沉浸</option>
                         <option>恐怖</option>
                         <option>機制</option>
+                        <option>歡樂</option>
                     </select>
                 </div>
 
@@ -93,7 +95,7 @@ export default function ScriptGrid() {
                     <>
                         <div className={styles.grid}>
                             {visible.map((s, i) => (
-                                <ScriptCard key={i} card={s} onClick={() => setSelectedScript(s)} />
+                                <ScriptCard key={i} card={s} />
                             ))}
                         </div>
                         {filtered.length > displayLimit && (
@@ -106,10 +108,6 @@ export default function ScriptGrid() {
                     </>
                 )}
             </div>
-
-            {selectedScript && (
-                <ScriptModal card={selectedScript} onClose={() => setSelectedScript(null)} />
-            )}
         </section>
     );
 }
