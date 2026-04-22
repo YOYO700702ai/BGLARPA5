@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import ScriptCard from './ScriptCard';
+import InfoTabs from './InfoTabs';
 import styles from './ScriptGrid.module.css';
 
 export default function ScriptGrid() {
@@ -87,26 +88,33 @@ export default function ScriptGrid() {
                     </select>
                 </div>
 
-                {loading ? (
-                    <p className={styles.loading}>載入中...</p>
-                ) : visible.length === 0 ? (
-                    <p className={styles.loading}>無符合條件之劇本。</p>
-                ) : (
-                    <>
-                        <div className={styles.grid}>
-                            {visible.map((s, i) => (
-                                <ScriptCard key={i} card={s} />
-                            ))}
-                        </div>
-                        {filtered.length > displayLimit && (
-                            <div className={styles.moreBtnWrap}>
-                                <button className={styles.moreBtn} onClick={() => setDisplayLimit(n => n + 10)}>
-                                    顯示更多
-                                </button>
-                            </div>
+                <div className={styles.layout}>
+                    <div className={styles.main}>
+                        {loading ? (
+                            <p className={styles.loading}>載入中...</p>
+                        ) : visible.length === 0 ? (
+                            <p className={styles.loading}>無符合條件之劇本。</p>
+                        ) : (
+                            <>
+                                <div className={styles.grid}>
+                                    {visible.map((s, i) => (
+                                        <ScriptCard key={i} card={s} />
+                                    ))}
+                                </div>
+                                {filtered.length > displayLimit && (
+                                    <div className={styles.moreBtnWrap}>
+                                        <button className={styles.moreBtn} onClick={() => setDisplayLimit(n => n + 10)}>
+                                            顯示更多
+                                        </button>
+                                    </div>
+                                )}
+                            </>
                         )}
-                    </>
-                )}
+                    </div>
+                    <aside className={styles.aside}>
+                        <InfoTabs />
+                    </aside>
+                </div>
             </div>
         </section>
     );

@@ -36,6 +36,7 @@ function getText(props, key, isTitle = false) {
 
 export async function getAllScripts() {
   const pages = await fetchNotionPages();
+  pages.sort((a, b) => new Date(b.created_time) - new Date(a.created_time));
   return pages.map(p => {
     const props = p.properties || {};
     const name = getText(props, '劇本名稱', true) || '未命名';
